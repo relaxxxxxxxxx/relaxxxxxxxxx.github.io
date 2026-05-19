@@ -1,12 +1,129 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>泡面宇宙</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>泡面宇宙</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;800&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<script src="site.js"></script>
+  <div class="steam-layer" aria-hidden="true"></div>
+
+  <header class="hero">
+    <nav class="nav">
+      <a href="#" class="logo">🍜 泡面宇宙</a>
+      <ul>
+        <li><a href="#gallery">图鉴</a></li>
+        <li><a href="#brew">冲泡</a></li>
+        <li><a href="#rank">榜单</a></li>
+        <li><a href="#wall">留言墙</a></li>
+      </ul>
+    </nav>
+
+    <div class="hero-content">
+      <p class="tag">全球 3000 亿份灵魂夜宵</p>
+      <h1>一碗泡面<br><span>治愈整个宇宙</span></h1>
+      <p class="lead">从康师傅到出前一丁——泡面爱好者的圣地。</p>
+      <div class="hero-actions">
+        <button type="button" class="btn primary" id="btn-brew">开始 3 分钟冲泡</button>
+        <button type="button" class="btn ghost" id="btn-shuffle">随机来一碗</button>
+      </div>
+      <div class="timer-display" id="timer" hidden>
+        <div class="timer-ring">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="54"></circle>
+            <circle class="ring-progress" cx="60" cy="60" r="54" id="ring-progress"></circle>
+          </svg>
+          <span class="timer-text" id="timer-text">3:00</span>
+        </div>
+        <p class="timer-hint">水开了吗？面饼下锅了吗？</p>
+      </div>
+    </div>
+
+    <div class="floating-noodles" aria-hidden="true">
+      <span>🍜</span><span>🥢</span><span>🌶️</span><span>🥚</span><span>🧅</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="stats">
+      <article><strong data-count="47">0</strong><span>品牌收录</span></article>
+      <article><strong data-count="128">0</strong><span>口味图鉴</span></article>
+      <article><strong data-count="3">0</strong><span>分钟幸福</span></article>
+      <article><strong data-count="9999">0</strong><span>深夜治愈值</span></article>
+    </section>
+
+    <section id="gallery" class="section gallery">
+      <div class="section-head">
+        <h2>泡面图鉴</h2>
+        <p>点击卡片，查看灵魂配料与传说</p>
+        <div class="filters">
+          <button type="button" class="filter active" data-filter="all">全部</button>
+          <button type="button" class="filter" data-filter="cn">国产</button>
+          <button type="button" class="filter" data-filter="jp">日系</button>
+          <button type="button" class="filter" data-filter="kr">韩式</button>
+          <button type="button" class="filter" data-filter="spicy">辣味</button>
+        </div>
+      </div>
+      <div class="card-grid" id="card-grid"></div>
+    </section>
+
+    <section id="brew" class="section brew">
+      <div class="section-head">
+        <h2>冲泡实验室</h2>
+        <p>拖动滑块，调配你的完美一碗</p>
+      </div>
+      <div class="brew-panel">
+        <div class="bowl-preview">
+          <div class="broth" id="broth"></div>
+          <div class="noodle-strands"></div>
+          <div class="toppings" id="toppings"></div>
+        </div>
+        <div class="sliders">
+          <label><span>辣度 🌶️</span><input type="range" id="spice" min="0" max="100" value="30"></label>
+          <label><span>浓稠度 🍲</span><input type="range" id="thickness" min="0" max="100" value="50"></label>
+          <label><span>配料丰富度 🥚</span><input type="range" id="topping" min="0" max="100" value="60"></label>
+          <label><span>面条硬度 🍜</span><input type="range" id="firmness" min="0" max="100" value="40"></label>
+          <p class="brew-result" id="brew-result">温和豚骨，深夜治愈系</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="rank" class="section rank">
+      <div class="section-head">
+        <h2>泡面封神榜</h2>
+        <p>由泡面宇宙居民投票（纯属娱乐）</p>
+      </div>
+      <ol class="rank-list" id="rank-list"></ol>
+    </section>
+
+    <section id="wall" class="section wall">
+      <div class="section-head">
+        <h2>泡面留言墙</h2>
+        <p>写下你与泡面的故事</p>
+      </div>
+      <form class="wall-form" id="wall-form">
+        <input type="text" id="wall-name" placeholder="你的昵称" maxlength="20" required>
+        <textarea id="wall-msg" placeholder="那一夜，宿舍停电，只有泡面亮着..." maxlength="200" required></textarea>
+        <button type="submit" class="btn primary">贴上留言 🍜</button>
+      </form>
+      <div class="wall-posts" id="wall-posts"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>🍜 泡面宇宙 · 仅供馋嘴娱乐 · 请适量食用</p>
+    <p class="footer-tip">最佳食用时间：凌晨 1:47</p>
+  </footer>
+
+  <dialog id="detail-modal">
+    <article id="modal-content"></article>
+    <button type="button" class="modal-close" id="modal-close" aria-label="关闭">×</button>
+  </dialog>
+
+  <script src="site.js"></script>
 </body>
 </html>
